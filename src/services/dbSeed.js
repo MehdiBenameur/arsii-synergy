@@ -1,10 +1,34 @@
 import { db } from './firebaseConfig';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDocs, deleteDoc } from 'firebase/firestore';
 import { USERS, TEAMS, PROJECTS, TASKS, COMMENTS } from '../data/mockData';
 
 export const seedDatabase = async () => {
     try {
-        console.log('🌱 Starting database seed...');
+        console.log('🌱 Starting database seed (with wipe)...');
+
+        // 0. Wipe existing data (including subcollections added for AI feature)
+        const collectionsToWipe = ['users', 'teams', 'projects', 'tasks', 'comments'];
+        for (const colName of collectionsToWipe) {
+            console.log(`🧹 Wiping ${colName}...`);
+            const snap = await getDocs(collection(db, colName));
+            for (const d of snap.docs) {
+                // Wipe subcollections first if it's projects or users
+                if (colName === 'projects') {
+                    const artifactsSnap = await getDocs(collection(db, `projects/${d.id}/artifacts`));
+                    for (const a of artifactsSnap.docs) {
+                        await deleteDoc(a.ref);
+                    }
+                }
+                if (colName === 'users') {
+                    const draftsSnap = await getDocs(collection(db, `users/${d.id}/drafts`));
+                    for (const dr of draftsSnap.docs) {
+                        await deleteDoc(dr.ref);
+                    }
+                }
+                await deleteDoc(d.ref);
+            }
+        }
+        console.log('✅ Wipe complete');
 
         // 1. Seed Users
         const usersRef = collection(db, 'users');

@@ -12,6 +12,11 @@ import { LoginScreen } from '../screens/auth/LoginScreen';
 import { ProfileScreen } from '../screens/shared/ProfileScreen';
 import { NotificationsScreen } from '../screens/shared/NotificationsScreen';
 
+// AI Artifact Screens
+import { ArtifactViewerScreen } from '../screens/shared/ArtifactViewerScreen';
+import { ArtifactChatScreen } from '../screens/shared/ArtifactChatScreen';
+import { DiffViewScreen } from '../screens/shared/DiffViewScreen';
+
 // User Screens
 import { UserDashboard } from '../screens/user/UserDashboard';
 import { TaskDetailScreen } from '../screens/user/TaskDetailScreen';
@@ -178,6 +183,22 @@ export const AppNavigator = () => {
                     <Stack.Screen
                         name="TeamWorkload"
                         component={TeamWorkloadScreen}
+                    />
+                    
+                    {/* AI Artifact Screens */}
+                    <Stack.Screen 
+                        name="ArtifactViewer" 
+                        component={ArtifactViewerScreen} 
+                    />
+                    <Stack.Screen 
+                        name="ArtifactChat" 
+                        component={ArtifactChatScreen} 
+                        options={{ presentation: 'modal' }} 
+                    />
+                    <Stack.Screen 
+                        name="DiffView" 
+                        component={DiffViewScreen} 
+                        options={{ presentation: 'modal' }} 
                     />
                 </>
             )}

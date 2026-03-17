@@ -65,6 +65,15 @@ Create tasks (as a Lead), set priorities and deadlines. Update status from the T
 ### 4. Real-time Notifications
 Receive push notifications whenever someone assigns you a task or comments on your work.
 
+### ✨ 5. Unified AI Workspace
+A Gemini Flash-powered AI assistant that knows your project's complete context automatically.
+<video src="./ARSII AI Feature Demo.mp4" controls="controls" width="100%"></video>
+
+- **Linked Documents**: Co-author living "Project Brief" and "Task List" documents with the AI. Changes requested in the chat interface are automatically parsed and previewed in real-time.
+- **3-Tab Interface**: Seamlessly switch between the AI Chat, your Project Brief draft, and your Task List draft.
+- **Git-like Publishing**: Leads and Managers can review their personal drafts against the live published Master documents in a side-by-side Diff View before hitting "Publish ✨".
+- **Role-Based Access**: Members can view the Master documents and chat with the AI to create personal drafts, but only Managers and Leads have the authority to publish changes to the entire team.
+
 ---
 *Created for the ARSII-Sfax Challenge.*
 *Stop the Scroll, Start the Control.*

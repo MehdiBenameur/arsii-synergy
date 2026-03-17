@@ -88,6 +88,25 @@ export const ManagerDashboard = ({ navigation }) => {
 
                                 <ProgressBar progress={progress} color={project.color} style={{ marginBottom: spacing.md }} />
 
+                                {/* AI Docs Buttons */}
+                                <View style={styles.docsRow}>
+                                    <TouchableOpacity
+                                        style={[styles.docBtn, { backgroundColor: colors.primaryLight }]}
+                                        onPress={() => navigation.navigate('ArtifactViewer', { projectId: project.id, type: 'main' })}
+                                    >
+                                        <Ionicons name="sparkles" size={14} color={colors.primary} />
+                                        <Text style={styles.docBtnText}>Project Brief</Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity
+                                        style={[styles.docBtn, { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border }]}
+                                        onPress={() => navigation.navigate('ArtifactViewer', { projectId: project.id, type: 'tasklist' })}
+                                    >
+                                        <Ionicons name="list" size={14} color={colors.text} />
+                                        <Text style={[styles.docBtnText, { color: colors.text }]}>Task List</Text>
+                                    </TouchableOpacity>
+                                </View>
+
                                 <Text style={styles.projectDesc} numberOfLines={2}>{project.description}</Text>
 
                                 <View style={styles.projectFooter}>
@@ -231,6 +250,25 @@ const styles = StyleSheet.create({
         paddingTop: spacing.sm,
         borderTopWidth: 1,
         borderTopColor: colors.borderLight,
+    },
+    docsRow: {
+        flexDirection: 'row',
+        gap: spacing.sm,
+        marginBottom: spacing.md,
+    },
+    docBtn: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 6,
+        borderRadius: borderRadius.md,
+    },
+    docBtnText: {
+        color: colors.primary,
+        fontSize: 12,
+        fontWeight: typography.bold,
+        marginLeft: 4,
     },
     teamsRow: {
         flexDirection: 'row',

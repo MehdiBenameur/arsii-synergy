@@ -33,12 +33,16 @@ export const NotificationProvider = ({ children }) => {
         }
 
         // 1. Get Push Token and save to user doc
-        registerForPushNotificationsAsync().then(token => {
-            if (token) {
-                setExpoPushToken(token);
-                updateDoc(doc(db, 'users', user.id), { expoPushToken: token }).catch(console.error);
-            }
-        });
+        try {
+            registerForPushNotificationsAsync().then(token => {
+                if (token) {
+                    setExpoPushToken(token);
+                    updateDoc(doc(db, 'users', user.id), { expoPushToken: token }).catch(console.error);
+                }
+            }).catch(e => console.log('Push notifications not supported on this platform/device:', e));
+        } catch (e) {
+            console.log('Error registering for push notifications:', e);
+        }
 
         // 2. Listen to this user's notifications from Firestore
         const q = query(collection(db, 'notifications'), where('userId', '==', user.id));
@@ -55,6 +59,11 @@ export const NotificationProvider = ({ children }) => {
     }, [user]);
 
     async function registerForPushNotificationsAsync() {
+        if (Platform.OS === 'web') {
+            console.log('Push notifications are not supported on web natively.');
+            return null;
+        }
+
         let token;
 
         if (Platform.OS === 'android') {

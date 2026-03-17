@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppNavigator } from './src/navigation/AppNavigator';
-import { AuthProvider, ProjectProvider, NotificationProvider } from './src/context';
+import { AuthProvider, ProjectProvider, NotificationProvider, ArtifactProvider } from './src/context';
 import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
@@ -9,10 +9,12 @@ export default function App() {
     <AuthProvider>
       <ProjectProvider>
         <NotificationProvider>
-          <NavigationContainer>
-            <AppNavigator />
-          </NavigationContainer>
-          <StatusBar style="auto" />
+          <ArtifactProvider>
+            <NavigationContainer>
+              <AppNavigator />
+            </NavigationContainer>
+            <StatusBar style="auto" />
+          </ArtifactProvider>
         </NotificationProvider>
       </ProjectProvider>
     </AuthProvider>

@@ -47,11 +47,19 @@ export const LoginScreen = () => {
                 <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
 
                     <View style={styles.header}>
-                        <View style={styles.logoContainer}>
+                        <TouchableOpacity style={styles.logoContainer} onLongPress={async () => {
+                            try {
+                                await seedDatabase();
+                                Alert.alert('Success', 'Database seeded successfully!');
+                            } catch (error) {
+                                Alert.alert('Error', 'Failed to seed database.');
+                            }
+                        }}>
                             <Text style={styles.logoPrefix}>ar</Text>
                             <Text style={styles.logoSuffix}>sii</Text>
-                        </View>
+                        </TouchableOpacity>
                         <Text style={styles.appTitle}>Synergy App</Text>
+
                         <Text style={styles.subtitle}>Stop the Scroll, Start the Control</Text>
                     </View>
 

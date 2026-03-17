@@ -4,14 +4,18 @@ import { useAuth } from '../../context/AuthContext';
 import { useProjects } from '../../context/ProjectContext';
 import { TaskCard, SearchBar } from '../../components';
 import { colors, typography, spacing, borderRadius } from '../../theme';
+import { Ionicons } from '@expo/vector-icons';
 
 export const UserDashboard = ({ navigation }) => {
     const { user } = useAuth();
-    const { getTasksForUser } = useProjects();
+    const { getTasksForUser, projects } = useProjects();
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
 
     const userTasks = getTasksForUser(user.id);
+    
+    // Find the project this user belongs to (for MVP, we assume they are part of a team on a project)
+    const myProject = projects.find(p => p.id === 'proj_1' || p.id === 'proj_2'); // Simplified for MVP since user->team->project mapping is complex in mock data
 
     const filteredTasks = useMemo(() => {
         return userTasks
@@ -72,6 +76,27 @@ export const UserDashboard = ({ navigation }) => {
             <FlatList
                 data={filteredTasks}
                 keyExtractor={item => item.id}
+                ListHeaderComponent={
+                    myProject ? (
+                        <View style={styles.docsRow}>
+                            <TouchableOpacity
+                                style={[styles.docBtn, { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.borderLight }]}
+                                onPress={() => navigation.navigate('ArtifactViewer', { projectId: myProject.id, type: 'main' })}
+                            >
+                                <Ionicons name="document-text-outline" size={16} color={colors.text} />
+                                <Text style={[styles.docBtnText, { color: colors.text }]}>Project Brief</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={[styles.docBtn, { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.borderLight }]}
+                                onPress={() => navigation.navigate('ArtifactViewer', { projectId: myProject.id, type: 'tasklist' })}
+                            >
+                                <Ionicons name="list" size={16} color={colors.text} />
+                                <Text style={[styles.docBtnText, { color: colors.text }]}>Task List</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ) : null
+                }
                 renderItem={({ item }) => (
                     <TaskCard
                         task={item}
@@ -151,6 +176,24 @@ const styles = StyleSheet.create({
     listContent: {
         paddingHorizontal: spacing.xl,
         paddingBottom: spacing['4xl'],
+    },
+    docsRow: {
+        flexDirection: 'row',
+        gap: spacing.sm,
+        marginBottom: spacing.md,
+    },
+    docBtn: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: spacing.md,
+        borderRadius: borderRadius.md,
+    },
+    docBtnText: {
+        fontSize: typography.sm,
+        fontWeight: typography.bold,
+        marginLeft: spacing.xs,
     },
     emptyContainer: {
         alignItems: 'center',

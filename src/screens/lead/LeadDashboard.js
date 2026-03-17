@@ -9,11 +9,12 @@ import { Ionicons } from '@expo/vector-icons';
 
 export const LeadDashboard = ({ navigation }) => {
     const { user } = useAuth();
-    const { teams, getTasksForTeam, getTeamProgress } = useProjects();
+    const { getProjectById, teams, projects, getTasksForTeam, getTeamProgress } = useProjects();
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
 
     const myTeam = teams.find(t => t.id === user.teamId);
+    const myProject = myTeam ? projects.find(p => p.teamIds?.includes(myTeam.id)) : null;
     const teamTasks = myTeam ? getTasksForTeam(myTeam.id) : [];
     const teamProgress = myTeam ? getTeamProgress(myTeam.id) : 0;
 
@@ -132,6 +133,27 @@ export const LeadDashboard = ({ navigation }) => {
                         <Text style={[styles.actionBtnText, { color: colors.text }]}>Workload</Text>
                     </TouchableOpacity>
                 </View>
+
+                {/* AI Docs Buttons */}
+                {myProject && (
+                    <View style={styles.docsRow}>
+                        <TouchableOpacity
+                            style={[styles.docBtn, { backgroundColor: colors.primaryLight }]}
+                            onPress={() => navigation.navigate('ArtifactViewer', { projectId: myProject.id, type: 'main' })}
+                        >
+                            <Ionicons name="sparkles" size={16} color={colors.primary} />
+                            <Text style={styles.docBtnText}>Project Brief ✨</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={[styles.docBtn, { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border }]}
+                            onPress={() => navigation.navigate('ArtifactViewer', { projectId: myProject.id, type: 'tasklist' })}
+                        >
+                            <Ionicons name="list" size={16} color={colors.text} />
+                            <Text style={[styles.docBtnText, { color: colors.text }]}>AI Task List 📋</Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
 
                 <View style={styles.taskList}>
                     {filteredTasks.length > 0 ? (
@@ -252,6 +274,26 @@ const styles = StyleSheet.create({
     actionBtnText: {
         color: colors.surface,
         fontSize: typography.sm,
+        fontWeight: typography.bold,
+        marginLeft: spacing.xs,
+    },
+    docsRow: {
+        flexDirection: 'row',
+        paddingHorizontal: spacing.xl,
+        gap: spacing.md,
+        marginBottom: spacing.xl,
+    },
+    docBtn: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: spacing.sm,
+        borderRadius: borderRadius.md,
+    },
+    docBtnText: {
+        color: colors.primary,
+        fontSize: typography.xs,
         fontWeight: typography.bold,
         marginLeft: spacing.xs,
     },

@@ -2,14 +2,15 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-// Your web app's Firebase configuration
+// Firebase configuration — values come from .env (EXPO_PUBLIC_* prefix)
+// Restart the Expo dev server after editing .env for changes to take effect.
 const firebaseConfig = {
-    apiKey: "AIzaSyBlqoifnDP7J2dsnjN7vQ6RpnCkG3Gag68",
-    authDomain: "arsii-synergy-e0498.firebaseapp.com",
-    projectId: "arsii-synergy-e0498",
-    storageBucket: "arsii-synergy-e0498.firebasestorage.app",
-    messagingSenderId: "722276450977",
-    appId: "1:722276450977:web:77246469c6160bb00ea6e0"
+    apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
