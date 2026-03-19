@@ -110,7 +110,7 @@ Receive push notifications whenever someone assigns you a task or comments on yo
 ### ✨ 5. Unified AI Workspace (New Feature!)
 A Gemini Flash-powered AI assistant that knows your project's complete context automatically.
 
-<video src="https://github.com/MehdiBenameur/arsii-synergy/raw/main/ARSII%20AI%20Feature%20Demo.mp4" controls="controls" muted="muted" playsinline="playsinline" style="max-width: 100%;"></video>
+**[🎥 Click here to watch the AI Workspace Demo Video](https://github.com/MehdiBenameur/arsii-synergy/raw/main/ARSII%20AI%20Feature%20Demo.mp4)**
 
 - **Linked Documents**: Co-author living "Project Brief" and "Task List" documents with the AI. Changes requested in the chat interface are automatically parsed and previewed in real-time.
 - **3-Tab Interface**: Seamlessly switch between the AI Chat, your Project Brief draft, and your Task List draft.
